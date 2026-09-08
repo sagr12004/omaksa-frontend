@@ -76,7 +76,8 @@ export function TestSessionProvider({ children }) {
   const [country, setCountry] = useState("+91");
   const [emailOrMobile, setEmailOrMobile] = useState("");
   const [gender, setGender] = useState("Male");
-  const [age, setAge] = useState("19 – 25");
+  const [age, setAge] = useState("");
+  const [dob, setDob] = useState("");
   const [answers, setAnswers] = useState(emptyAnswers);
   const [shareOpen, setShareOpen] = useState(false);
 
@@ -104,6 +105,8 @@ export function TestSessionProvider({ children }) {
     setGender,
     age,
     setAge,
+    dob,
+    setDob,
     answers,
     saveAnswer,
     resetTest,

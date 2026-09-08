@@ -1,9 +1,44 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../components/Button";
+import TextField from "../components/TextField";
 import { useSession } from "../context/TestSession";
 
 const GENDERS = ["Male", "Female", "Other"];
-const AGES = ["Under 13", "13 – 18", "19 – 25", "26 – 35", "36 – 50", "Above 50"];
+
+function formatDobInput(raw) {
+  const digits = String(raw).replace(/\D/g, "").slice(0, 8);
+  if (digits.length <= 2) return digits;
+  if (digits.length <= 4) return `${digits.slice(0, 2)}/${digits.slice(2)}`;
+  return `${digits.slice(0, 2)}/${digits.slice(2, 4)}/${digits.slice(4)}`;
+}
+
+function parseDob(value) {
+  const match = /^(\d{2})\/(\d{2})\/(\d{4})$/.exec(value);
+  if (!match) return null;
+  const day = Number(match[1]);
+  const month = Number(match[2]);
+  const year = Number(match[3]);
+  const date = new Date(year, month - 1, day);
+  if (date.getFullYear() !== year || date.getMonth() !== month - 1 || date.getDate() !== day) return null;
+  return date;
+}
+
+function yearsFromDob(date, now = new Date()) {
+  let years = now.getFullYear() - date.getFullYear();
+  const monthDelta = now.getMonth() - date.getMonth();
+  if (monthDelta < 0 || (monthDelta === 0 && now.getDate() < date.getDate())) years -= 1;
+  return years;
+}
+
+function bracketFromAge(years) {
+  if (years < 13) return "Under 13";
+  if (years <= 18) return "13 – 18";
+  if (years <= 25) return "19 – 25";
+  if (years <= 35) return "26 – 35";
+  if (years <= 50) return "36 – 50";
+  return "Above 50";
+}
 
 function GenderMark({ kind, selected }) {
   const stroke = selected ? "#FAF8F5" : "#1B4332";
@@ -35,7 +70,39 @@ function GenderMark({ kind, selected }) {
 
 export default function Personalize() {
   const navigate = useNavigate();
-  const { gender, setGender, age, setAge } = useSession();
+  const { gender, setGender, age, setAge, dob, setDob } = useSession();
+  const [dobError, setDobError] = useState("");
+  const [dobFocused, setDobFocused] = useState(false);
+
+  const applyDob = (next) => {
+    setDob(next);
+    if (next.length < 10) {
+      setDobError("");
+      setAge("");
+      return;
+    }
+    const parsed = parseDob(next);
+    if (!parsed) {
+      setDobError("Please enter a valid date of birth");
+      setAge("");
+      return;
+    }
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    if (parsed > today) {
+      setDobError("Date of birth cannot be in the future");
+      setAge("");
+      return;
+    }
+    const years = yearsFromDob(parsed, today);
+    if (years < 0 || years > 120) {
+      setDobError("Please enter a valid date of birth");
+      setAge("");
+      return;
+    }
+    setDobError("");
+    setAge(bracketFromAge(years));
+  };
 
   return (
     <div className="personalize">
@@ -60,18 +127,34 @@ export default function Personalize() {
         ))}
       </div>
 
-      <h2>Age</h2>
-      <div className="choice-grid">
-        {AGES.map((item) => (
-          <button
-            key={item}
-            type="button"
-            className={`choice-card ${age === item ? "is-selected" : ""}`}
-            onClick={() => setAge(item)}
-          >
-            {item}
-          </button>
-        ))}
+      <div className="dob-stack">
+        <h2>Date of Birth</h2>
+        <TextField
+          id="dob"
+          value={dob}
+          focused={dobFocused}
+          error={dobError}
+          placeholder="DD/MM/YYYY"
+          inputMode="numeric"
+          autoComplete="bday"
+          aria-label="Date of Birth"
+          onFocus={() => setDobFocused(true)}
+          onBlur={() => {
+            setDobFocused(false);
+            if (dob && dob.length < 10) setDobError("Please enter a valid date of birth");
+          }}
+          onChange={(event) => applyDob(formatDobInput(event.target.value))}
+        />
+        <h2>Age Bracket</h2>
+        <TextField
+          id="age-bracket"
+          value={age}
+          placeholder=""
+          readOnly
+          tabIndex={-1}
+          aria-label="Age Bracket"
+          aria-readonly="true"
+        />
       </div>
 
       <Button onClick={() => navigate("/test/rhythm/recognition?q=1")}>Continue to Octavium →</Button>
