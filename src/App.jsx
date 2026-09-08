@@ -1,6 +1,8 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+
 import PhoneFrame from "./components/PhoneFrame";
 import { TestSessionProvider } from "./context/TestSession";
+
 import Demonstration from "./screens/Demonstration";
 import Login from "./screens/Login";
 import OTP from "./screens/OTP";
@@ -15,29 +17,59 @@ import ResultsPending from "./screens/ResultsPending";
 import ResultsSubmitted from "./screens/ResultsSubmitted";
 import Splash from "./screens/Splash";
 import Terms from "./screens/Terms";
+
 import "./App.css";
 
 export default function App() {
   return (
     <TestSessionProvider>
-      <BrowserRouter>
+      <BrowserRouter basename={import.meta.env.BASE_URL}>
         <PhoneFrame>
           <Routes>
             <Route path="/" element={<Splash />} />
+
             <Route path="/auth/phone" element={<Login />} />
+
             <Route path="/auth/otp" element={<OTP />} />
+
             <Route path="/auth/password" element={<PasswordLogin />} />
+
             <Route path="/legal/terms" element={<Terms />} />
-            <Route path="/onboarding/personalize" element={<Personalize />} />
+
+            <Route
+              path="/onboarding/personalize"
+              element={<Personalize />}
+            />
+
             <Route path="/welcome" element={<Profile />} />
-            <Route path="/test/:section/recognition" element={<Recognition />} />
-            <Route path="/test/:section/demonstration" element={<Demonstration />} />
+
+            <Route
+              path="/test/:section/recognition"
+              element={<Recognition />}
+            />
+
+            <Route
+              path="/test/:section/demonstration"
+              element={<Demonstration />}
+            />
+
             <Route path="/results/pending" element={<ResultsPending />} />
+
             <Route path="/results/submitted" element={<ResultsSubmitted />} />
+
             <Route path="/results" element={<Results />} />
-            <Route path="/results/review/:index" element={<QuestionReview />} />
+
+            <Route
+              path="/results/review/:index"
+              element={<QuestionReview />}
+            />
+
             <Route path="/results/report" element={<Report />} />
-            <Route path="*" element={<Navigate to="/" replace />} />
+
+            <Route
+              path="*"
+              element={<Navigate to="/" replace />}
+            />
           </Routes>
         </PhoneFrame>
       </BrowserRouter>
