@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Navigate, useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { publicAsset } from "../assets";
 import AudioPlayerRow from "../components/AudioPlayerRow";
 import Button from "../components/Button";
 import HintCard from "../components/HintCard";
@@ -91,7 +92,7 @@ export default function Recognition() {
       </Button>
       <Button variant="ghostPill" onClick={() => goNext({ choice: "", skipped: true })}>
         SKIP
-        <img src="/assets/icons/skip-arrow.svg" alt="" />
+        <img src={publicAsset("assets/icons/skip-arrow.svg")} alt="" />
       </Button>
       <ValidationSheet open={sheet && !expired} onClose={() => setSheet(false)} />
       {expired ? (

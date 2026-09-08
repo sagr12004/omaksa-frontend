@@ -1,5 +1,5 @@
 import { Navigate, useNavigate, useParams } from "react-router-dom";
-import { assets } from "../assets";
+import { assets, publicAsset } from "../assets";
 import BackChevron from "../components/BackChevron";
 import Button from "../components/Button";
 import InterpretationCard from "../components/InterpretationCard";
@@ -62,7 +62,7 @@ export default function QuestionReview() {
           onClick={() => shareResults("Octavium question review")}
           aria-label="Share question review"
         >
-          <img src="/assets/icons/share.svg" alt="" />
+          <img src={publicAsset("assets/icons/share.svg")} alt="" />
         </button>
       </header>
       <QuestionNavStrip

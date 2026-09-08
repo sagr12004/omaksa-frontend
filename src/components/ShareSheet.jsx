@@ -1,12 +1,13 @@
+import { publicAsset } from "../assets";
 import { shareResults } from "../lib/share";
 
 const TARGETS = [
-  { icon: "/assets/icons/whatsapp.svg", label: "WhatsApp", kind: "whatsapp" },
-  { icon: "/assets/icons/drive.svg", label: "Drive", kind: "share" },
-  { icon: "/assets/icons/bluetooth.svg", label: "Bluetooth", kind: "share" },
-  { icon: "/assets/icons/gmail.svg", label: "Gmail", kind: "gmail" },
-  { icon: "/assets/icons/photos.svg", label: "Photos", kind: "share" },
-  { icon: "/assets/icons/folder.svg", label: "Folder", kind: "share" },
+  { icon: publicAsset("assets/icons/whatsapp.svg"), label: "WhatsApp", kind: "whatsapp" },
+  { icon: publicAsset("assets/icons/drive.svg"), label: "Drive", kind: "share" },
+  { icon: publicAsset("assets/icons/bluetooth.svg"), label: "Bluetooth", kind: "share" },
+  { icon: publicAsset("assets/icons/gmail.svg"), label: "Gmail", kind: "gmail" },
+  { icon: publicAsset("assets/icons/photos.svg"), label: "Photos", kind: "share" },
+  { icon: publicAsset("assets/icons/folder.svg"), label: "Folder", kind: "share" },
 ];
 
 export default function ShareSheet({ open, onClose }) {

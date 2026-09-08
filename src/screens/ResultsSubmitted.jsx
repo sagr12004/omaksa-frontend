@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { assets } from "../assets";
+import { assets, publicAsset } from "../assets";
 import BackChevron from "../components/BackChevron";
 import Button from "../components/Button";
 import { shareResults } from "../lib/share";
@@ -16,7 +16,7 @@ export default function ResultsSubmitted() {
           <BackChevron />
         </button>
         <button type="button" className="share-btn" aria-label="Share" onClick={() => shareResults()}>
-          <img src="/assets/icons/share.svg" alt="" />
+          <img src={publicAsset("assets/icons/share.svg")} alt="" />
         </button>
       </header>
       <div className="thanks-card">

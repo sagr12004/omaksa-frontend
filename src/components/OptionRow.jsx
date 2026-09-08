@@ -1,3 +1,4 @@
+import { publicAsset } from "../assets";
 import AudioPlayerRow from "./AudioPlayerRow";
 
 export default function OptionRow({ letter, selected, onSelect, kind, frequency, pattern }) {
@@ -18,7 +19,7 @@ export default function OptionRow({ letter, selected, onSelect, kind, frequency,
       <span className="option-letter">{letter}</span>
       <AudioPlayerRow kind={kind} frequency={frequency} pattern={pattern} compact />
       <span className={`option-check ${selected ? "is-checked" : ""}`} aria-hidden>
-        {selected ? <img src="/assets/icons/check.svg" alt="" /> : null}
+        {selected ? <img src={publicAsset("assets/icons/check.svg")} alt="" /> : null}
       </span>
     </div>
   );

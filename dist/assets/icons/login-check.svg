@@ -1,3 +1,3 @@
-<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path id="Vector" d="M4.53809 7.2793L3.74902 8.33301L1.24902 5V4.99902L2.9502 7.2666C3.13905 7.51838 3.43526 7.66699 3.75 7.66699C4.05899 7.66699 4.34885 7.52275 4.53809 7.2793Z" stroke="#1B4332" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M1.6 5.15L3.85 7.45L8.4 2.5" stroke="#1B4332" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>

@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import { publicAsset } from "../assets";
 import { analyzeRecording } from "../lib/audioAnalysis";
 import { claimAudio, releaseAudio } from "../lib/audioBus";
 import { QUESTION_SECONDS } from "../hooks/useQuestionTimer";
@@ -333,10 +334,10 @@ export default function RecordControl({ state, halt = false, onStateChange, onRe
         {state === "processing" ? (
           <span className="processing-stack">
             <span className="processing-ring" aria-hidden />
-            <img src="/assets/icons/hourglass.svg" alt="" />
+            <img src={publicAsset("assets/icons/hourglass.svg")} alt="" />
           </span>
         ) : (
-          <img className="mic-icon" src="/assets/icons/mic.svg" alt="" />
+          <img className="mic-icon" src={publicAsset("assets/icons/mic.svg")} alt="" />
         )}
         {state === "recording" && !halt ? (
           <span className={`mic-timer ${timerTone}`}>{mmss}</span>
@@ -399,13 +400,13 @@ export default function RecordControl({ state, halt = false, onStateChange, onRe
 
       {(state === "recorded" || state === "processing") && !halt && (
         <button type="button" className="record-again" onClick={reset}>
-          <img src="/assets/icons/reload.svg" alt="" /> RECORD AGAIN
+          <img src={publicAsset("assets/icons/reload.svg")} alt="" /> RECORD AGAIN
         </button>
       )}
 
       {error && state !== "expired" && !halt ? (
         <div className="caution-banner">
-          <img src="/assets/icons/caution.svg" alt="" />
+          <img src={publicAsset("assets/icons/caution.svg")} alt="" />
           <p>
             <strong>Record your response first</strong>
             <span>You need to record before you can continue to next question</span>

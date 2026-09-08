@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { assets } from "../assets";
+import { assets, publicAsset } from "../assets";
 import BackChevron from "../components/BackChevron";
 import Button from "../components/Button";
 import InterpretationCard from "../components/InterpretationCard";
@@ -28,7 +28,7 @@ export default function Results() {
         </button>
         <h1>Yours Results</h1>
         <button type="button" className="share-btn" onClick={() => setShareOpen(true)} aria-label="Share">
-          <img src="/assets/icons/share.svg" alt="" />
+          <img src={publicAsset("assets/icons/share.svg")} alt="" />
         </button>
       </header>
       <p className="done-count">10/10</p>

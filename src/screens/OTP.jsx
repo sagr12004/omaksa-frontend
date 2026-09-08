@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { publicAsset } from "../assets";
 import AuthLayout from "../components/AuthLayout";
 import Button from "../components/Button";
 import HelpLink from "../components/HelpLink";
@@ -71,7 +72,7 @@ export default function OTP() {
         )}
       </p>
       <button type="button" className="whatsapp-otp" onClick={requestWhatsAppOtp}>
-        <img src="/assets/icons/whatsapp.svg" alt="" />
+        <img src={publicAsset("assets/icons/whatsapp.svg")} alt="" />
         Get OTP on <strong>WhatsApp</strong>
       </button>
       <button type="button" className="password-switch" onClick={() => navigate("/auth/password")}>

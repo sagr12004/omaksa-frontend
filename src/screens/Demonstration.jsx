@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Navigate, useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { publicAsset } from "../assets";
 import AudioPlayerRow from "../components/AudioPlayerRow";
 import BeatTrainer from "../components/BeatTrainer";
 import Button from "../components/Button";
@@ -140,7 +141,7 @@ export default function Demonstration() {
       </Button>
       <Button variant="ghostPill" onClick={() => goNext({ recorded: false, skipped: true })}>
         SKIP
-        <img src="/assets/icons/skip-arrow.svg" alt="" />
+        <img src={publicAsset("assets/icons/skip-arrow.svg")} alt="" />
       </Button>
       {expired ? (
         <TryAgainOverlay

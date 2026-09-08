@@ -1,20 +1,25 @@
+export function publicAsset(path) {
+  const relative = String(path).replace(/^\/+/, "");
+  return `${import.meta.env.BASE_URL}${relative}`;
+}
+
 export const assets = {
-  guitarSoundhole: "/assets/guitar-soundhole.png",
-  heroLogin: "/assets/hero-login.jpeg",
-  paperTexture: "/assets/paper-texture.jpeg",
-  avatar: "/assets/avatar.png",
-  grandPiano: "/assets/grand-piano.jpg",
-  notesCluster: "/assets/notes-cluster.png",
-  guitarWide: "/assets/guitar-wide.png",
-  guitarNeck: "/assets/guitar-neck.png",
-  heroPassword: "/assets/hero-password.jpeg",
-  loginFrameBg: "/assets/login-frame-bg.png",
-  pianoGuitarBg: "/assets/piano-guitar-bg.png",
-  violin: "/assets/violin.jpg",
-  playButton: "/assets/play-button.png",
-  waveformGold: "/assets/waveform-gold.png",
-  loaderClef: "/assets/loader-clef.png",
-  notesLoader: "/assets/notes-loader.png",
-  vinyl: "/assets/vinyl.png",
-  notesSmall: "/assets/notes-small.png",
+  guitarSoundhole: publicAsset("assets/guitar-soundhole.png"),
+  heroLogin: publicAsset("assets/hero-login.jpeg"),
+  paperTexture: publicAsset("assets/paper-texture.jpeg"),
+  avatar: publicAsset("assets/avatar.png"),
+  grandPiano: publicAsset("assets/grand-piano.jpg"),
+  notesCluster: publicAsset("assets/notes-cluster.png"),
+  guitarWide: publicAsset("assets/guitar-wide.png"),
+  guitarNeck: publicAsset("assets/guitar-neck.png"),
+  heroPassword: publicAsset("assets/hero-password.jpeg"),
+  loginFrameBg: publicAsset("assets/login-frame-bg.png"),
+  pianoGuitarBg: publicAsset("assets/piano-guitar-bg.png"),
+  violin: publicAsset("assets/violin.jpg"),
+  playButton: publicAsset("assets/play-button.png"),
+  waveformGold: publicAsset("assets/waveform-gold.png"),
+  loaderClef: publicAsset("assets/loader-clef.png"),
+  notesLoader: publicAsset("assets/notes-loader.png"),
+  vinyl: publicAsset("assets/vinyl.png"),
+  notesSmall: publicAsset("assets/notes-small.png"),
 };

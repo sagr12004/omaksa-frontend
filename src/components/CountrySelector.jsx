@@ -1,3 +1,5 @@
+import { publicAsset } from "../assets";
+
 const CODES = ["+91", "+1", "+44", "+61"];
 
 export default function CountrySelector({ value, onChange }) {
@@ -10,7 +12,7 @@ export default function CountrySelector({ value, onChange }) {
           </option>
         ))}
       </select>
-      <img className="country-chevron" src="/assets/icons/chevron-down.svg" alt="" />
+      <img className="country-chevron" src={publicAsset("assets/icons/chevron-down.svg")} alt="" />
     </div>
   );
 }

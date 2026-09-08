@@ -1,4 +1,4 @@
-import { assets } from "../assets";
+import { assets, publicAsset } from "../assets";
 import BackChevron from "./BackChevron";
 
 export default function AuthLayout({
@@ -26,7 +26,7 @@ export default function AuthLayout({
         {variant === "phone" ? <img className="auth-hero" src={assets.heroLogin} alt="" /> : null}
         {onClose ? (
           <button className="icon-close" type="button" onClick={onClose} aria-label="Close">
-            <img src="/assets/icons/close.svg" alt="" />
+            <img src={publicAsset("assets/icons/close.svg")} alt="" />
           </button>
         ) : null}
         {onBack ? (
