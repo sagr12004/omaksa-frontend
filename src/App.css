@@ -3193,6 +3193,30 @@
   color: #1f2937;
 }
 
+.personalize .dob-privacy {
+  margin: 10px 0 0;
+  color: #6c727c;
+  font-family: var(--font-inter);
+  font-size: 11px;
+  line-height: 1.35;
+  text-align: center;
+}
+
+.personalize .choice-grid.is-readonly {
+  opacity: 0.92;
+}
+
+.personalize .choice-grid.is-readonly .choice-card {
+  cursor: default;
+  pointer-events: none;
+}
+
+.try-again-icon {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 6px;
+}
+
 .share-handle {
   width: 78px;
   height: 23px;
@@ -4587,10 +4611,28 @@
   text-align: center;
 }
 
-.try-again-icon {
+.assessment-timer {
   display: flex;
   justify-content: center;
-  margin-bottom: 6px;
+  align-items: center;
+  margin: 8px auto 6px;
+}
+
+.assessment-timer-count {
+  font-family: var(--font-inter);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+  color: #1b4332;
+  font-variant-numeric: tabular-nums;
+}
+
+.assessment-timer.is-expired .assessment-timer-count {
+  color: #ec0d11;
+}
+
+.try-again-icon .assessment-timer {
+  margin: 0 auto 6px;
 }
 
 .try-again-card h2 {

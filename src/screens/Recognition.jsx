@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Navigate, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { publicAsset } from "../assets";
+import AssessmentTimer from "../components/AssessmentTimer";
 import AudioPlayerRow from "../components/AudioPlayerRow";
 import Button from "../components/Button";
 import HintCard from "../components/HintCard";
@@ -22,7 +23,7 @@ export default function Recognition() {
   const { saveAnswer, answers } = useSession();
   const number = Number(params.get("q") || 1);
   const question = useMemo(() => getQuestion(section, "recognition", number), [section, number]);
-  const { remaining, expired, restart } = useQuestionTimer(question?.globalIndex);
+  const { expired, setExpired, restart, timerKey } = useQuestionTimer(question?.globalIndex);
   const existing = answers[question?.globalIndex];
   const [choice, setChoice] = useState(existing?.choice || "");
   const [sheet, setSheet] = useState(false);
@@ -51,7 +52,6 @@ export default function Recognition() {
       <TestHeader
         current={number}
         total={sectionQuestionCount(section, "recognition")}
-        countdown={remaining}
         onBack={() => navigate(prevRoute(section, "recognition", number))}
       />
       <LevelPill>{question.title}</LevelPill>
@@ -59,6 +59,11 @@ export default function Recognition() {
       <h3 className="ref-label">Reference Audio</h3>
       <AudioPlayerRow key={`${question.id}-ref`} kind={section} frequency={question.frequency} pattern={question.rhythmPattern} />
       <HintCard>{hint}</HintCard>
+      <AssessmentTimer
+        timerKey={timerKey}
+        isPlaying={!expired}
+        onComplete={() => setExpired(true)}
+      />
       <div className="options">
         {LETTERS.map((letter, i) => (
           <OptionRow

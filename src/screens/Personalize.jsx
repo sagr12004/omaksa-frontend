@@ -5,6 +5,7 @@ import TextField from "../components/TextField";
 import { useSession } from "../context/TestSession";
 
 const GENDERS = ["Male", "Female", "Other"];
+const AGES = ["Under 13", "13 – 18", "19 – 25", "26 – 35", "36 – 50", "Above 50"];
 
 function formatDobInput(raw) {
   const digits = String(raw).replace(/\D/g, "").slice(0, 8);
@@ -78,7 +79,6 @@ export default function Personalize() {
     setDob(next);
     if (next.length < 10) {
       setDobError("");
-      setAge("");
       return;
     }
     const parsed = parseDob(next);
@@ -103,6 +103,8 @@ export default function Personalize() {
     setDobError("");
     setAge(bracketFromAge(years));
   };
+
+  const dobLocked = Boolean(parseDob(dob) && !dobError);
 
   return (
     <div className="personalize">
@@ -146,15 +148,25 @@ export default function Personalize() {
           onChange={(event) => applyDob(formatDobInput(event.target.value))}
         />
         <h2>Age Bracket</h2>
-        <TextField
-          id="age-bracket"
-          value={age}
-          placeholder=""
-          readOnly
-          tabIndex={-1}
-          aria-label="Age Bracket"
-          aria-readonly="true"
-        />
+        <div className={`choice-grid ${dobLocked ? "is-readonly" : ""}`}>
+          {AGES.map((item) => (
+            <button
+              key={item}
+              type="button"
+              className={`choice-card ${age === item ? "is-selected" : ""}`}
+              aria-disabled={dobLocked}
+              onClick={() => {
+                if (dobLocked) return;
+                setDob("");
+                setDobError("");
+                setAge(item);
+              }}
+            >
+              {item}
+            </button>
+          ))}
+        </div>
+        <p className="dob-privacy">Date of birth is optional. You can provide your age bracket instead.</p>
       </div>
 
       <Button onClick={() => navigate("/test/rhythm/recognition?q=1")}>Continue to Octavium →</Button>

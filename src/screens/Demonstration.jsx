@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Navigate, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { publicAsset } from "../assets";
+import AssessmentTimer from "../components/AssessmentTimer";
 import AudioPlayerRow from "../components/AudioPlayerRow";
 import BeatTrainer from "../components/BeatTrainer";
 import Button from "../components/Button";
@@ -20,7 +21,7 @@ export default function Demonstration() {
   const { saveAnswer } = useSession();
   const number = Number(params.get("q") || 1);
   const question = useMemo(() => getQuestion(section, "demonstration", number), [section, number]);
-  const { remaining, expired, restart } = useQuestionTimer(question?.globalIndex);
+  const { expired, setExpired, restart, timerKey } = useQuestionTimer(question?.globalIndex);
   const [recordState, setRecordState] = useState("idle");
   const [blobUrl, setBlobUrl] = useState("");
   const [error, setError] = useState(false);
@@ -68,7 +69,6 @@ export default function Demonstration() {
       <TestHeader
         current={number}
         total={sectionQuestionCount(section, "demonstration")}
-        countdown={remaining}
         onBack={() => navigate(prevRoute(section, "demonstration", number))}
       />
       <LevelPill>{question.title}</LevelPill>
@@ -94,6 +94,11 @@ export default function Demonstration() {
           />
         )}
       </HintCard>
+      <AssessmentTimer
+        timerKey={timerKey}
+        isPlaying={!expired}
+        onComplete={() => setExpired(true)}
+      />
       <RecordControl
         key={question.id}
         kind={section}
