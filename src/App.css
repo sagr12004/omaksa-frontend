@@ -4704,7 +4704,9 @@
 .question-timer {
   display: flex;
   justify-content: center;
-  margin: 8px 0 6px;
+  margin: 16px 0 6px;
+  position: relative;
+  top: 14px;
 }
 .test-screen:has(> .try-again-overlay) {
   overflow: hidden;
@@ -4723,6 +4725,7 @@
 .assessment-timer .clock-face {
   display: block;
   flex: 0 0 auto;
+  
 }
 
 .assessment-timer.is-expired .assessment-timer-count {
