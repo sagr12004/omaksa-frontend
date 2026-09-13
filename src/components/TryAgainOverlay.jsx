@@ -17,7 +17,7 @@ export default function TryAgainOverlay({ onRetry, questionType = "demonstration
       <div className="try-again-glass" />
       <div className="try-again-card">
         <span className="try-again-icon">
-          <AssessmentTimer timerKey="try-again-expired" isPlaying={false} remaining={0} size={72} />
+          <AssessmentTimer timerKey="try-again-expired" isPlaying={false} remaining={0} size={40} />
         </span>
         <h2 id="try-again-title">Try again</h2>
         <p className="try-again-lead">

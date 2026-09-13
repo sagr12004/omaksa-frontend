@@ -403,16 +403,6 @@ export default function RecordControl({ state, halt = false, onStateChange, onRe
           <img src={publicAsset("assets/icons/reload.svg")} alt="" /> RECORD AGAIN
         </button>
       )}
-
-      {error && state !== "expired" && !halt ? (
-        <div className="caution-banner">
-          <img src={publicAsset("assets/icons/caution.svg")} alt="" />
-          <p>
-            <strong>Record your response first</strong>
-            <span>You need to record before you can continue to next question</span>
-          </p>
-        </div>
-      ) : null}
     </div>
   );
 }

@@ -8,6 +8,7 @@ import Button from "../components/Button";
 import HintCard from "../components/HintCard";
 import InstructionCard from "../components/InstructionCard";
 import LevelPill from "../components/LevelPill";
+import AssessmentErrorCard from "../components/AssessmentErrorCard";
 import RecordControl from "../components/RecordControl";
 import TestHeader from "../components/TestHeader";
 import TryAgainOverlay from "../components/TryAgainOverlay";
@@ -70,7 +71,9 @@ export default function Demonstration() {
         current={number}
         total={sectionQuestionCount(section, "demonstration")}
         onBack={() => navigate(prevRoute(section, "demonstration", number))}
-      />
+      >
+        
+      </TestHeader>
       <LevelPill>{question.title}</LevelPill>
       <InstructionCard number={question.number}>{instruction}</InstructionCard>
       <h3 className="ref-label">Reference Audio</h3>
@@ -81,6 +84,12 @@ export default function Demonstration() {
         pattern={question.rhythmPattern}
         onProgress={section === "rhythm" ? setPlayback : undefined}
       />
+      <AssessmentTimer
+          timerKey={timerKey}
+          isPlaying={!expired}
+          onComplete={() => setExpired(true)}
+          size={28}
+        />
       <HintCard>
         {section === "pitch" ? (
           "You can record the reference audio as many times as you wish before submitting."
@@ -94,11 +103,6 @@ export default function Demonstration() {
           />
         )}
       </HintCard>
-      <AssessmentTimer
-        timerKey={timerKey}
-        isPlaying={!expired}
-        onComplete={() => setExpired(true)}
-      />
       <RecordControl
         key={question.id}
         kind={section}
@@ -116,38 +120,47 @@ export default function Demonstration() {
           if (next === "idle") setBlobUrl("");
         }}
       />
-      <Button
-        className={recordState !== "recorded" ? "is-disabled" : ""}
-        disabled={expired || recordState === "recording" || recordState === "processing"}
-        aria-disabled={recordState !== "recorded"}
-        onClick={() => {
-          if (expired || recordState === "recording" || recordState === "processing") return;
-          if (recordState !== "recorded") {
-            setError(true);
-            return;
-          }
-          const correctTaps = beatTaps.filter((tap) => tap.correct).length;
-          goNext({
-            recorded: true,
-            blobUrl,
-            skipped: false,
-            beatTaps,
-            beatAccuracy: section === "rhythm" ? correctTaps / Math.max(1, beatTaps.length) : null,
-            analysis,
-            score:
-              section === "rhythm"
-                ? analysis?.score * 0.65 +
-                  (correctTaps / Math.max(1, beatTaps.length)) * 0.35
-                : analysis?.score,
-          });
-        }}
-      >
-        NEXT
-      </Button>
-      <Button variant="ghostPill" onClick={() => goNext({ recorded: false, skipped: true })}>
-        SKIP
-        <img src={publicAsset("assets/icons/skip-arrow.svg")} alt="" />
-      </Button>
+      <div className="test-actions">
+        {error && recordState !== "expired" && !expired ? (
+          <AssessmentErrorCard
+            variant="demonstration"
+            heading="Record your response first"
+            message="You need to record before you can continue to the next question"
+          />
+        ) : null}
+        <Button
+          className={recordState !== "recorded" ? "is-disabled" : ""}
+          disabled={expired || recordState === "recording" || recordState === "processing"}
+          aria-disabled={recordState !== "recorded"}
+          onClick={() => {
+            if (expired || recordState === "recording" || recordState === "processing") return;
+            if (recordState !== "recorded") {
+              setError(true);
+              return;
+            }
+            const correctTaps = beatTaps.filter((tap) => tap.correct).length;
+            goNext({
+              recorded: true,
+              blobUrl,
+              skipped: false,
+              beatTaps,
+              beatAccuracy: section === "rhythm" ? correctTaps / Math.max(1, beatTaps.length) : null,
+              analysis,
+              score:
+                section === "rhythm"
+                  ? analysis?.score * 0.65 +
+                    (correctTaps / Math.max(1, beatTaps.length)) * 0.35
+                  : analysis?.score,
+            });
+          }}
+        >
+          NEXT
+        </Button>
+        <Button variant="ghostPill" onClick={() => goNext({ recorded: false, skipped: true })}>
+          SKIP
+          <img src={publicAsset("assets/icons/skip-arrow.svg")} alt="" />
+        </Button>
+      </div>
       {expired ? (
         <TryAgainOverlay
           questionType="demonstration"

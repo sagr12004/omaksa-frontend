@@ -710,7 +710,6 @@
   min-height: 800px;
   padding-bottom: 24px;
   background: var(--canvas);
-  overflow-y: auto;
 }
 
 .test-header {
@@ -939,10 +938,6 @@
 
 .mic-rec,
 .mic-timer {
-  position: absolute;
-  bottom: 10px;
-  left: 0;
-  width: 100%;
   font-size: 11px;
 }
 
@@ -998,7 +993,7 @@
 }
 
 .record-again {
-  margin-top: 8px;
+  margin-top: 3px;
   border: 0;
   background: none;
   color: var(--gold-accent);
@@ -1605,8 +1600,12 @@
 }
 
 .test-screen {
+  display: block;
+  position: relative;
   height: 800px;
+  max-height: 800px;
   min-height: 800px;
+  box-sizing: border-box;
   overflow: hidden;
   padding: 0;
 }
@@ -1714,7 +1713,7 @@
 .ref-label {
   width: 328px;
   height: 20px;
-  margin: 4px auto 2px;
+  margin: 6px auto 6px;
   color: #1b4332;
   font-family: var(--font-playfair);
   font-size: 12px;
@@ -1836,8 +1835,11 @@
 
 .options {
   width: 316px;
-  margin: 39px auto 14px;
+  margin: 39px auto 0;
   gap: 22px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 }
 
 .option-row {
@@ -1891,7 +1893,7 @@
   height: 48px;
 }
 
-.test-screen > .btn-ghostPill {
+.test-actions > .btn-ghostPill {
   width: 164px;
   min-width: 164px;
   height: 35px;
@@ -1967,10 +1969,14 @@
 .record-card {
   width: 296px;
   height: 293px;
-  margin: 18px auto 8px;
-  padding: 6px 12px 10px;
+  margin: 18px auto 0;
+  padding: 8px 14px 10px;
   border: 2px solid #d4c4a8;
   background: rgba(250, 248, 245, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
 }
 
 .record-kicker {
@@ -1984,22 +1990,55 @@
 .mic-button {
   width: 90px;
   height: 90px;
+  min-width: 90px;
+  min-height: 90px;
   border: 1.5px solid #c4a574;
   background: #1b4332;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 14px;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 .mic-button.recording {
-  border: 5px solid rgba(255, 216, 165, 0.7);
+  border: 2px solid #ffd8a5;
   outline: 4px solid rgba(255, 193, 112, 0.35);
   background: #e94c00;
+  padding-top: 12px;
+  width: 90px;
+  height: 90px;
 }
 
 .mic-icon {
-  position: absolute;
-  left: 25px;
-  top: 20px;
+  position: static;
+  left: auto;
+  top: auto;
   width: 40px;
   height: 40px;
+  flex: 0 0 40px;
+  object-fit: contain;
+}
+
+.mic-rec,
+.mic-timer {
+  position: static;
+  bottom: auto;
+  left: auto;
+  width: auto;
+  margin-top: 2px;
+  flex: 0 0 auto;
+  font-family: var(--font-inter);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16px;
+  color: #dcc99a;
+}
+
+.mic-button.recording .mic-timer {
+  color: #fff;
 }
 
 .processing-stack {
@@ -2031,8 +2070,7 @@
   line-height: 12px;
 }
 
-.state-recording .record-status,
-.has-error .record-status {
+.state-recording .record-status {
   color: #ff0004;
 }
 
@@ -2046,6 +2084,7 @@
 
 .empty-recording {
   height: 48px;
+  box-sizing: border-box;
   border: 2px dashed #c4a574;
   border-radius: 3px;
   background: #faf8f5;
@@ -2096,35 +2135,68 @@
   height: 16px;
 }
 
-.caution-banner {
-  width: 295px;
-  height: 30px;
-  margin: 8px -13px 0;
-  padding: 3px 9px;
+.caution-banner,
+.assessment-error-card {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-sizing: border-box;
+  width: 316px;
+  min-height: 0;
+  height: auto;
+  margin: 0 auto;
+  padding: 6px 10px;
+  border-radius: 8px;
   color: #ff0004;
   background: rgba(255, 0, 4, 0.1);
+  text-align: left;
 }
 
+.caution-banner img,
+.assessment-error-icon {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  flex: 0 0 24px;
+}
+
+.assessment-error-icon img,
 .caution-banner img {
-  width: 30px;
-  height: 30px;
-  margin-top: -3px;
+  width: 24px;
+  height: 24px;
+  margin: 0;
+  object-fit: contain;
 }
 
-.caution-banner p {
+.caution-banner p,
+.assessment-error-card p {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+  margin: 0;
+  color: #ff0004;
   font-family: var(--font-playfair-var);
-  font-size: 9px;
-  line-height: 10px;
+}
+
+.assessment-error-card strong,
+.caution-banner strong {
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.assessment-error-card span,
+.caution-banner span {
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 1.3;
 }
 
 .state-error,
 .record-card.has-error {
-  height: 254px;
-}
-
-.record-card.has-error + .btn,
-.state-error + .btn {
-  background: rgba(255, 0, 4, 0.75);
+  height: 266px;
 }
 
 .validation-sheet {
@@ -3016,7 +3088,8 @@
   color: #7c746a;
 }
 
-.test-screen > .btn-ghostPill {
+.test-screen > .btn-ghostPill,
+.test-actions > .btn-ghostPill {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -3028,7 +3101,8 @@
   line-height: 1;
 }
 
-.test-screen > .btn-ghostPill img {
+.test-screen > .btn-ghostPill img,
+.test-actions > .btn-ghostPill img {
   width: 18px;
   height: 7px;
 }
@@ -3298,26 +3372,31 @@
   align-items: center;
 }
 
-.test-screen > .btn-lg {
-  position: absolute;
-  left: 28px;
-  top: 663px;
+.test-screen > .btn-lg,
+.test-actions > .btn-primary {
+  position: relative;
+  left: auto;
+  top: auto;
   width: 304px;
   height: 48px;
   margin: 0;
   z-index: 3;
 }
 
-.test-screen > .btn-ghostPill {
-  position: absolute;
-  left: 100px;
-  top: 728px;
+.test-screen > .btn-ghostPill,
+.test-actions > .btn-ghostPill {
+  position: relative;
+  left: auto;
+  top: auto;
   width: 164px;
   height: 35px;
-  margin: 0;
+  margin: 17px 0 0;
   padding: 0 0 0 2px;
   gap: 8px;
   z-index: 3;
+  color: #1b4332;
+  background: #faf8f5;
+  border: 1px solid #1b4332;
 }
 
 .test-header .header-back {
@@ -4015,8 +4094,10 @@
 
 .mic-button.recording {
   border: 2px solid #ffd8a5;
-  outline: none;
+  outline: 4px solid rgba(255, 193, 112, 0.35);
   background: #e94c00;
+  width: 90px;
+  height: 90px;
 }
 
 .record-live-wave {
@@ -4615,16 +4696,33 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 8px auto 6px;
+  gap: 4px;
+  width: auto;
+  height: 31px;
+  margin: 0;
+}
+.question-timer {
+  display: flex;
+  justify-content: center;
+  margin: 8px 0 6px;
+}
+.test-screen:has(> .try-again-overlay) {
+  overflow: hidden;
 }
 
 .assessment-timer-count {
   font-family: var(--font-inter);
-  font-size: 12px;
+  font-size: 15px;
   font-weight: 700;
   line-height: 1;
   color: #1b4332;
   font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+}
+
+.assessment-timer .clock-face {
+  display: block;
+  flex: 0 0 auto;
 }
 
 .assessment-timer.is-expired .assessment-timer-count {
@@ -4632,7 +4730,9 @@
 }
 
 .try-again-icon .assessment-timer {
-  margin: 0 auto 6px;
+  margin: 0 auto 8px;
+  height: 40px;
+  flex-basis: 40px;
 }
 
 .try-again-card h2 {
@@ -4670,5 +4770,139 @@
 
 .try-again-overlay .try-again-btn:active:not(:disabled) {
   filter: brightness(0.94);
+}
+
+.phone > .test-screen {
+  box-sizing: border-box;
+  min-height: 800px;
+  height: 800px;
+  max-height: 800px;
+  overflow: hidden;
+}
+
+.test-header .assessment-timer {
+  position: absolute;
+  left: 138px;
+  top: 10px;
+  width: auto;
+  height: 31px;
+  z-index: 2;
+}
+
+.test-header .assessment-timer-count {
+  font-size: 11px;
+  color: #1b4332;
+}
+
+.test-actions {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 8px;
+  padding-bottom: 0;
+}
+
+.test-screen:has(.options) > .test-actions {
+  margin-top: 22px;
+}
+
+.test-screen:has(.options) > .test-actions:has(.assessment-error-card) {
+  margin-top: 8px;
+}
+
+.test-actions > .assessment-error-card {
+  position: static;
+  flex: 0 0 auto;
+  margin: 0 auto 8px;
+}
+
+.test-actions > .assessment-error-card.is-recognition {
+  width: 316px;
+  min-height: 32px;
+  height: 32px;
+  padding: 4px 10px;
+  margin-bottom: 6px;
+  border: 1px solid rgba(236, 13, 17, 0.22);
+  border-radius: 8px;
+  background: rgba(255, 0, 4, 0.1);
+}
+
+.test-actions > .assessment-error-card.is-recognition p {
+  flex-direction: row;
+  align-items: center;
+  gap: 0;
+}
+
+.test-actions > .assessment-error-card.is-recognition strong {
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.test-actions > .assessment-error-card.is-demonstration {
+  width: 295px;
+  height: 30px;
+  min-height: 30px;
+  padding: 0 8px;
+  gap: 6px;
+  border-radius: 8px;
+  background: rgba(255, 0, 4, 0.1);
+  align-items: center;
+  margin-bottom: 9px;
+}
+
+.test-actions > .assessment-error-card.is-demonstration .assessment-error-icon,
+.test-actions > .assessment-error-card.is-demonstration .assessment-error-icon img {
+  width: 30px;
+  height: 30px;
+  flex-basis: 30px;
+}
+
+.test-actions > .assessment-error-card.is-demonstration p {
+  gap: 2px;
+}
+
+.test-actions > .assessment-error-card.is-demonstration strong {
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 11px;
+  letter-spacing: -0.48px;
+}
+
+.test-actions > .assessment-error-card.is-demonstration span {
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 11px;
+  letter-spacing: -0.4px;
+}
+
+.record-card.has-error .your-recording {
+  margin: 2px 0 8px;
+}
+
+.record-card.has-error .record-status {
+  margin: 6px 0 4px;
+  color: #e43601;
+}
+
+.empty-recording,
+.playback-bar {
+  width: 268px;
+  flex: 0 0 48px;
+}
+
+.test-actions > .btn-ghostPill,
+.test-actions > .btn-ghostPill:hover,
+.test-actions > .btn-ghostPill:active,
+.test-actions > .btn-ghostPill:disabled,
+.test-screen > .btn-ghostPill,
+.test-screen > .btn-ghostPill:hover,
+.test-screen > .btn-ghostPill:active,
+.test-screen > .btn-ghostPill:disabled {
+  background: #faf8f5;
+  color: #1b4332;
+  border-color: #1b4332;
+  filter: none;
 }
 
